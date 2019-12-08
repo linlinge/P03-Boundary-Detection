@@ -108,7 +108,7 @@ void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
     pcl::search::KdTree<PointN>::Ptr kdtree(new pcl::search::KdTree<PointN>());
 	kdtree->setInputCloud(cloud);
 	double mean_dist=ComputeMeanDistance(cloud);
-
+    vector<int> boundary_id;
     vector<double> Kstatistical;
     Kstatistical.resize(cloud->points.size());
 
@@ -170,8 +170,14 @@ void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
             cloud->points[i].r=0;
             cloud->points[i].g=255;
             cloud->points[i].b=0;
+            boundary_id.push_back(i);
         }
 	}
+    ofstream fout("BoundaryID.csv");
+    for(int i=0;i<boundary_id.size();i++){
+        fout<<boundary_id[i]<<endl;
+    }
+    fout.close();
 	pcl::io::savePLYFileASCII("EdgeDetect.ply",*cloud);
 }
 

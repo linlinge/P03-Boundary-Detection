@@ -203,15 +203,15 @@ int main(int argc,char** argv)
 	}
 
 	// DetectHoleEdge03_kNN(cloud);
-	// DetectHoleEdge03_Radius(cloud);  //*
+	DetectHoleEdge03_Radius(cloud);  //*
 	// DetectHoleEdge02_r(cloud);
 	// MMR_CLT(cloud);
 	// R_CLT(cloud);
 	// DataMining dm(cloud);
 	// dm.LOOP();
-	ImprovedLoop IL;
-	IL.Init(cloud);
-	IL.ILoop(32,0.8);
+	// ImprovedLoop IL;
+	// IL.Init(cloud);
+	// IL.ILoop(32,0.8);
 	// IL.StatisticCentreAndCentroid(cloud);
 	// IL.StatisticMinorMajorRatio(cloud);
 	// IL.EdgeDetection();
