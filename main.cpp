@@ -222,7 +222,7 @@ int main(int argc,char** argv)
 
 
 
-	pcl::io::savePLYFileBinary("MMR.ply",*cloud);
+	// pcl::io::savePLYFileBinary("MMR.ply",*cloud);
 
 
 	// boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer ("3D Viewer")); 

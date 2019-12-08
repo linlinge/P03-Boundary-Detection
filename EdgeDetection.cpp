@@ -105,7 +105,9 @@ void DetectHoleEdge02_r(pcl::PointCloud<PointN>::Ptr cloud)
 // Method 03: Direction Distribution
 void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
 {
-    pcl::search::KdTree<PointN>::Ptr kdtree(new pcl::search::KdTree<PointN>());
+    pcl::search::KdTree<PointType>::Ptr kdtree(new pcl::search::KdTree<PointType>());
+    pcl::PointCloud<PointType>::Ptr cloud_boundary(new pcl::PointCloud<PointType>());
+    pcl::PointCloud<PointType>::Ptr cloud_subject(new pcl::PointCloud<PointType>());
 	kdtree->setInputCloud(cloud);
 	double mean_dist=ComputeMeanDistance(cloud);
     vector<int> boundary_id;
@@ -167,10 +169,14 @@ void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
 
         // roll,pitch,yaw threshould
         if(max_roll_gap>M_PI/2.0 && max_pitch_gap>M_PI/2.0 && max_yaw_gap>M_PI/2.0){
-            cloud->points[i].r=0;
-            cloud->points[i].g=255;
-            cloud->points[i].b=0;
+            // cloud->points[i].r=0;
+            // cloud->points[i].g=255;
+            // cloud->points[i].b=0;
             boundary_id.push_back(i);
+            cloud_boundary->points.push_back(cloud->points[i]);
+        }
+        else{
+            cloud_subject->points.push_back(cloud->points[i]);
         }
 	}
     ofstream fout("BoundaryID.csv");
@@ -178,14 +184,15 @@ void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
         fout<<boundary_id[i]<<endl;
     }
     fout.close();
-	pcl::io::savePLYFileASCII("EdgeDetect.ply",*cloud);
+    pcl::io::savePLYFileASCII("CloudSubject.ply",*cloud_subject);
+	pcl::io::savePLYFileASCII("EdgeDetect.ply",*cloud_boundary);
 }
 
 
 // Method 03: Direction Distribution (kNN)
 void DetectHoleEdge03_kNN(pcl::PointCloud<PointN>::Ptr cloud)
 {
-    pcl::search::KdTree<PointN>::Ptr kdtree(new pcl::search::KdTree<PointN>());
+    pcl::search::KdTree<PointN>::Ptr kdtree(new pcl::search::KdTree<PointN>());    
 	kdtree->setInputCloud(cloud);
 	double mean_dist=ComputeMeanDistance(cloud);
 	#pragma omp parallel for
