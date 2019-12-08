@@ -114,7 +114,7 @@ void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
     vector<double> Kstatistical;
     Kstatistical.resize(cloud->points.size());
 
-	#pragma omp parallel for
+	// #pragma omp parallel for
 	for(int i=0;i<cloud->points.size();i++){
         // Define
 		vector<int> idx;
@@ -179,6 +179,7 @@ void DetectHoleEdge03_Radius(pcl::PointCloud<PointN>::Ptr cloud)
             cloud_subject->points.push_back(cloud->points[i]);
         }
 	}
+    cout<<"End!"<<endl;
     ofstream fout("BoundaryID.csv");
     for(int i=0;i<boundary_id.size();i++){
         fout<<boundary_id[i]<<endl;

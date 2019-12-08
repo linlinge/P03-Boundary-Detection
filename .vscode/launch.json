@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/template-cmake",
-            "args": ["/home/llg/dataset/FRM_0130_Clipped.ply"],
+            "args": ["/home/llg/dataset/5_Plane.ply"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
